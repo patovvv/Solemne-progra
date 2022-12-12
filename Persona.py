@@ -7,19 +7,19 @@ class Persona():
     def __str__(self):
         return "Nombre: {}, Edad: {}, Rol: {} ".format(self.__nombre,self.__edad,self.__rol)
 
-    def Get_Nombre(self):
+    def GetNombre(self):
         return self.__nombre
-    def Get_Edad(self):
+    def GetEdad(self):
         return self.__edad
     def Get_Rol(self):
         return self.__rol
 
 
 
-    def Set_Nombre(self,nombre):
+    def SetNombre(self,nombre):
         self.__nombre = nombre
-    def Set_Edad(self,edad):
+    def SetEdad(self,edad):
         self.__edad = edad
-    def Set_Rol(self,rol):
+    def SetRol(self,rol):
         self.__rol = rol
      
