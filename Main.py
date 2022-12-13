@@ -3,7 +3,8 @@ import numpy as np
 from random import *
 from Estudiante import *
 from Docente import *
-
+#Patricio Vargas
+#Francisco Muñoz
 def CargarArchivo():
     global df
     df=pd.read_csv("Solemne03.csv")
