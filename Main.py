@@ -10,28 +10,29 @@ def CargarArchivo():
     print(" ")
 
 def FiltradoDeDatos():
-    global d3
+    global d4
+    d1=df[(df["Nombres"]!="TRUE")&(df["Nombres"]!="FALSE")].dropna()
+    d2 =d1[(d1["Edad"]>0)&(d1["Edad"]<120)]
+    d3=d2.sort_values(by=["Nombres","Sueldo"])
+    d4=d3.drop_duplicates(subset=["Nombres"],keep="last")
     lista_random=[]
-    for i in range(len(df)):#agrega de forma aleatoria docente o estudiante
+    for i in range(len(d4)):#agrega de forma aleatoria docente o estudiante
         b=randint(0,1)
         if b==0:
             lista_random.append("Docente")
         if b==1:
-            lista_random.append("Estudiante")        
-    df["Profesion"]=lista_random#se agrega columna "Profesion" con los datos de lista
+            lista_random.append("Estudiante")
+    d4["Profesion"]=lista_random#se agrega columna "Profesion" con los datos de lista
 
-    d1=df[(df["Nombres"]!="TRUE")&(df["Nombres"]!="FALSE")&(df["Edad"]>0)&(df["Edad"]<120)].dropna()
-    d2=d1.sort_values(by=["Nombres","Sueldo"])
-    d3=d2.drop_duplicates(subset=["Nombres"],keep="last")
 
 
 
 def SepararDatos():
     global estudiantefinal
     global docentefinal
-    d3.set_index("Profesion",inplace=True)
-    d4=d3.loc["Docente"]
-    listadoc=d4.to_numpy().tolist()
+    d4.set_index("Profesion",inplace=True)
+    d5=d4.loc["Docente"]
+    listadoc=d5.to_numpy().tolist()
     #dfdoc0=pd.DataFrame(listadoc)
 
     dicciodc={0:"Nombre",1:"Edad",2:"Sueldo",3:"Grado",4:"Tipo"}
@@ -60,8 +61,8 @@ def SepararDatos():
 
     print("----------")
 
-    d5=d3.loc["Estudiante"]
-    listaest=d5.to_numpy().tolist()
+    d6=d4.loc["Estudiante"]
+    listaest=d6.to_numpy().tolist()
     listaest1=[]
     listbigest=[]
     for i in range(len(listaest)):
@@ -90,31 +91,34 @@ def SepararDatos():
     estudiantefinal=df_final_est.rename(columns=diccioest)
     estudiantefinal.to_excel("Datos de estudiantes.xlsx",engine="openpyxl")
 
-
-
-
 while True:
     try:
         print(" ")
         print("Sistema de datos\n\n\n")
-        print('1.Visualizar archivo csv original\n\n2.Imprimir listas de estudiantes y docentes(limpias)\n\n3.Finalizar programa')
-        opcion=int(input('\nOpcion: '))
-        if opcion==1:
+        print('1.Visualizar archivo csv original\n\n2.Cargar y filtrar archivo, imprimir listas de estudiantes y docentes(limpias)\n\n3.Finalizar programa')
+        opcion=str(input('\nOpcion: '))
+        if opcion=="1":
             CargarArchivo()
             print(df)
-        if opcion==2:
-            CargarArchivo()
-            FiltradoDeDatos()
-            SepararDatos()
-            print("Docentes:")
-            print(" ")
-            print(docentefinal)
-            print("----------------")
-            print("Estudiantes:")
-            print(estudiantefinal)
-            print(" ")
-        if opcion==3:
+            x=0
+        if opcion=="2":
+            if x ==0:
+                CargarArchivo()
+                FiltradoDeDatos()
+                SepararDatos()
+                print("Docentes:")
+                print(" ")
+                print(docentefinal)
+                print("----------------")
+                print("Estudiantes:")
+                print(estudiantefinal)
+                print(" ")
+            else:
+                print("Aun no has cargado el archivo csv elige la opcion 1 primero")
+                input("Presione ENTER para volver al menu: ")
+        if opcion=="3":
             print("Saliendo del sistema...")
             print(" ")
+            break
     except:
         print("Ingrese solo numero segun las opciones mostradas...")
